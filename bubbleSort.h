@@ -9,7 +9,7 @@
 #include <X11/Xlib.h>
 
 
-void bubbleSort(std::vector<int>& v){
+void bubbleSort(std::vector<int>& v, std::chrono::milliseconds time){
     int doneC = 1;
     int swap = false;
     do{
@@ -23,12 +23,15 @@ void bubbleSort(std::vector<int>& v){
             }
         }
         doneC++;
+        std::this_thread::sleep_for(time);
     }
     while (swap);
 }
 
 void bubbleView(std::vector<int>& v, const int& width, const int& height){
-    bubbleSort(v);
+    std::chrono::milliseconds time(200);
+    std::thread bsThread = std::thread(bubbleSort, std::ref(v), time);
+    bsThread.detach();
 
     int w = width/v.size();
     sf::RectangleShape bar(sf::Vector2f(10, 10));
@@ -53,6 +56,25 @@ void bubbleView(std::vector<int>& v, const int& width, const int& height){
         window.display();
     }
 
-};
+}
+
+
+void testBubbleSort(std::vector<int>& v){
+    int doneC = 1;
+    int swap = false;
+    do{
+        swap = false;
+        for (int i = 0; i < v.size() - doneC; i++){
+            if (v[i] > v[i + 1]){
+                int temp = v[i];
+                v[i] = v[i + 1];
+                v[i + 1] = temp;
+                swap = true;
+            }
+        }
+        doneC++;
+    }
+    while (swap);
+}
 
 #endif

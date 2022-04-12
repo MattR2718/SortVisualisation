@@ -3,6 +3,7 @@
 #include <thread>
 #include <X11/Xlib.h>
 
+
 int main()
 {
     // Create the main window

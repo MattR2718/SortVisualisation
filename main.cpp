@@ -2,27 +2,51 @@
 #include <SFML/Graphics.hpp>
 #include <thread>
 #include <X11/Xlib.h>
+#include <vector>
+#include <random>
+#include <algorithm>
+#include <iterator>
 
+#include "bubbleSort.h"
 
 int main()
 {
-    // Create the main window
+    XInitThreads();
+
+    const int WIDTH = 500;
+    const int HEIGHT = 500;
+
+    std::vector<int> v(100);
+
+    std::random_device rnd_device;
+    // Specify the engine and distribution.
+    std::mt19937 mersenne_engine {rnd_device()};  // Generates random integers
+    std::uniform_int_distribution<int> dist {1, HEIGHT};
+    auto gen = [&dist, &mersenne_engine](){ return dist(mersenne_engine); };
+    generate(begin(v), end(v), gen);
+
+    for (int i = 0; i < v.size(); i++){
+        std::cout<<v[i]<<'\n';
+    }
+
+    std::vector<int> bubbleVec = v;
+
+    std::thread bubbleThread = std::thread(bubbleView, std::ref(bubbleVec), std::ref(WIDTH), std::ref(HEIGHT));
+    
+    //bubbleThread.detach();
+    
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
-    // Start the game loop
     while (window.isOpen())
     {
-        // Process events
         sf::Event event;
         while (window.pollEvent(event))
         {
-            // Close window: exit
             if (event.type == sf::Event::Closed){
                 window.close();
             }
         }
-        // Clear screen
         window.clear();
-        // Update the window
         window.display();
     }
+    
 }

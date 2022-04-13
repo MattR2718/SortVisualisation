@@ -2,10 +2,15 @@
 #include <algorithm>
 #include <vector>
 #include <iterator>
-#include <numeric>
+#include <iostream>
+#include <SFML/Graphics.hpp>
+#include <chrono>
+#include <thread>
+#include <X11/Xlib.h>
 
 #include "bubbleSort.h"
 #include "insertionSort.h"
+#include "quickSort.h"
 
 TEST(TrueTest, AlwaysTrue){
     EXPECT_EQ(1, 1);
@@ -28,17 +33,40 @@ TEST(InsertionSort, Sort){
     testInsertionSort(v);
     std::sort(c.begin(), c.begin() + c.size());
     
+    /*
     std::cout<<"Mine: ";
     for (auto& g : v){ std::cout<<g<<"' "; }
     std::cout<<"\nStd: ";
     for (auto& g : c){ std::cout<<g<<"' "; }
     std::cout<<'\n';
-    
+    */
+
     ASSERT_EQ(v.size(), c.size()) << "VECTORS UNEQUAL LENGTHS";
     for (int i = 0; i < v.size(); i++){
         EXPECT_EQ(v[i], c[i]) << "VECTORS DIFFER AT INDEX : " << i;
     }
 }
+
+TEST(QuickSort, Sort){
+    std::vector<int> v = { 10, 5, 2, 6, 6, 68, 2, 5, 34, 8, 3, 56, 23, 685, 5 };
+    std::vector<int> c = v;
+    testQuickSort(v, 0, v.size() - 1);
+    std::sort(c.begin(), c.begin() + c.size());
+
+    /*
+    std::cout<<"Mine: ";
+    for (auto& g : v){ std::cout<<g<<"' "; }
+    std::cout<<"\nStd: ";
+    for (auto& g : c){ std::cout<<g<<"' "; }
+    std::cout<<'\n';
+    */
+
+    ASSERT_EQ(v.size(), c.size()) << "VECTORS UNEQUAL LENGTHS";
+    for (int i = 0; i < v.size(); i++){
+        EXPECT_EQ(v[i], c[i]) << "VECTORS DIFFER AT INDEX : " << i;
+    }
+}
+
 /*
 int main(){
     std::vector<int> v = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };

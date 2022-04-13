@@ -1,10 +1,12 @@
 #ifndef INSERTIONSORT
 #define INSERTIONSORT
 
+/*
 #include <algorithm>
 #include <vector>
 #include <chrono>
 #include <SFML/Graphics.hpp>
+*/
 
 void insertionSort(std::vector<int>& v, std::chrono::milliseconds time){
     int sortedIndex = 0;
@@ -25,7 +27,7 @@ void insertionSort(std::vector<int>& v, std::chrono::milliseconds time){
 }
 
 void insertionView(std::vector<int>& v, const int& width, const int& height){
-    std::chrono::milliseconds time(150);
+    std::chrono::milliseconds time(100);
     std::thread isThread = std::thread(insertionSort, std::ref(v), time);
     isThread.detach();
 

@@ -1,13 +1,14 @@
 #ifndef BUBBLESORT
 #define BUBBLESORT
 
+/*
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <chrono>
 #include <thread>
 #include <X11/Xlib.h>
-
+*/
 
 void bubbleSort(std::vector<int>& v, std::chrono::milliseconds time){
     int doneC = 1;
@@ -55,7 +56,6 @@ void bubbleView(std::vector<int>& v, const int& width, const int& height){
         }
         window.display();
     }
-
 }
 
 
